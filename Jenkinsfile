@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the repository from Git
-                git 'https://github.com/your-repository.git'  // Replace with your repo URL
+                git 'https://github.com/skycast88/skycast2.git'  // Replace with your repo URL
             }
         }
         stage('Install Dependencies') {
