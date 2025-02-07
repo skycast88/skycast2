@@ -4,27 +4,25 @@ pipeline {
         PATH = "C:\\Program Files\\nodejs;${env.PATH}"
     }
     stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository from Git
+                git 'https://github.com/your-repository.git'  // Replace with your repo URL
+            }
+        }
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'
-            }
-        }
-        stage('Build') {
-            steps {
-                bat 'npm run build'
-            }
-        }
-        stage('Deploy Locally') {
-            steps {
+                // Install Node.js dependencies using npm
                 script {
-                    // Start the app in the background
-                    bat 'start /B npm start'
-                    
-                    // Wait for the app to initialize
-                    bat 'ping 127.0.0.1 -n 10 > nul'
-                    
-                    // Verify the app is running on port 3000
-                    bat 'curl http://localhost:3000 || echo "Application did not start successfully"'
+                    bat 'npm install'  // Windows batch command for npm install
+                }
+            }
+        }
+        stage('Start Server') {
+            steps {
+                // Run the server on localhost:3000
+                script {
+                    bat 'npm start'  // This will run 'node server.js' if 'start' script is in package.json
                 }
             }
         }
