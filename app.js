@@ -3,6 +3,8 @@ const axios = require('axios');
 const path = require('path');
 const app = express();
 const port = 3000;
+const username = 'admin';
+const password = 'password123'; // Hardcoded password
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
