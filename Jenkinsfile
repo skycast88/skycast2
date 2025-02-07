@@ -7,7 +7,15 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the repository from Git
-                git 'https://github.com/skycast88/skycast2.git'  // Replace with your repo URL
+                checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/skycast88/skycast2.git',    
+                            credentialsId: 'd438b28d-8ef3-4d75-b3ec-e5247bb025f3' // Replace with your Jenkins credentials ID
+                        ]]
+                    ])
+               
             }
         }
         stage('Install Dependencies') {
