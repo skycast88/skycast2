@@ -1,6 +1,8 @@
 pipeline {
     agent any
     environment {
+        NODE_ENV = 'production'
+        PORT = '3000'
         PATH = "C:\\Program Files\\nodejs;${env.PATH}"
         SONARQUBE_URL = 'http://localhost:9000'   // Replace with your SonarQube server URL
         SONARQUBE_TOKEN = credentials('d814a8a3-bada-4f74-a879-1243b619f0b3') // Reference to the SonarQube token (ensure this is configured in Jenkins' credentials store)
@@ -59,7 +61,7 @@ pipeline {
             steps {
                 // Run the server on localhost:3000
                 script {
-                   bat 'npm start'  // This will run 'node server.js' if 'start' script is in package.json
+                   bat 'start /B set NODE_ENV=production && set PORT=3000 && npm start'  // This will run 'node server.js' if 'start' script is in package.json
                 }
             }
         }
