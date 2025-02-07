@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     // Run SonarQube scanner for code analysis
-                    withSonarQubeEnv('Local SonarQube') {  // 'Local SonarQube' is the name of your configured SonarQube instance in Jenkins
+                    withSonarQubeEnv('LocalSonarQube') {  // 'Local SonarQube' is the name of your configured SonarQube instance in Jenkins
                         bat """
                             %SONAR_SCANNER_HOME%\\bin\\sonar-scanner.bat ^
                             -Dsonar.projectKey=com.skycast ^
