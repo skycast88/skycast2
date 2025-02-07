@@ -47,7 +47,7 @@ pipeline {
                             -Dsonar.projectKey=com.skycast ^
                             -Dsonar.projectName="Skycast" ^
                             -Dsonar.projectVersion=1.0 ^
-                            -Dsonar.sources=src ^
+                            -Dsonar.sources=.
                             -Dsonar.host.url=%SONARQUBE_URL% ^
                             -Dsonar.login=%SONARQUBE_TOKEN%
                         """
