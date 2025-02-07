@@ -59,7 +59,7 @@ pipeline {
             steps {
                 // Run the server on localhost:3000
                 script {
-                   bat 'start /B npm start'  // This will run 'node server.js' if 'start' script is in package.json
+                   bat 'npm start'  // This will run 'node server.js' if 'start' script is in package.json
                 }
             }
         }
