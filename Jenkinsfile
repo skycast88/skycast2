@@ -61,9 +61,25 @@ pipeline {
             steps {
                 // Run the server on localhost:3000
                 script {
-                   bat 'start /B set NODE_ENV=production && set PORT=3000 && npm start'  // This will run 'node server.js' if 'start' script is in package.json
+                   echo 'Deploying Node.js application using PM2 on localhost...'
+                    // Stop the current PM2 application if it exists
+                    bat 'pm2 stop my-node-app || echo "PM2 process not found, starting a new one."'
+
+                    // Start or restart the Node.js application using PM2
+                    bat 'pm2 start npm --name "my-node-app" -- start'  // Assuming 'npm start' starts your app
+
+                    // Optionally, save the PM2 process list to automatically restart on system reboot
+                    bat 'pm2 save'
                 }
             }
+        }
+    }
+    post {
+        success {
+            echo 'Deployment was successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
