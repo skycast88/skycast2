@@ -8,6 +8,7 @@ pipeline {
         SONARQUBE_TOKEN = credentials('d814a8a3-bada-4f74-a879-1243b619f0b3') // Reference to the SonarQube token (ensure this is configured in Jenkins' credentials store)
         SONAR_SCANNER_HOME = 'C:\\sonar-scanner'
         HOMEPATH = 'C:\\Users\\mohit.k.singh'
+        PM2_HOME = 'C:\\Users\\mohit.k.singh\\.pm2'
     }
     stages {
         stage('Checkout') {
