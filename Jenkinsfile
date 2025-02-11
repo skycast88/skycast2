@@ -39,31 +39,13 @@ pipeline {
             }
         }
         
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Run SonarQube scanner for code analysis
-                    withSonarQubeEnv('LocalSonarQube') {  // 'Local SonarQube' is the name of your configured SonarQube instance in Jenkins
-                        bat """
-                            %SONAR_SCANNER_HOME%\\bin\\sonar-scanner.bat ^
-                            -Dsonar.projectKey=com.skycast ^
-                            -Dsonar.projectName="Skycast" ^
-                            -Dsonar.projectVersion=1.0 ^
-                            -Dsonar.sources=.
-                            -Dsonar.host.url=%SONARQUBE_URL% ^
-                            -Dsonar.login=%SONARQUBE_TOKEN%
-                        """
-                    }
-                }
-            }
-        }
         stage('Start Server') {
             steps {
                 // Run the server on localhost:3000
                 script {
                    echo 'Deploying Node.js application using PM2 on localhost...'
                     // Stop the current PM2 application if it exists
-                    bat 'pm2 stop skycast || echo "PM2 process not found, starting a new one."'
+                   // bat 'pm2 stop skycast || echo "PM2 process not found, starting a new one."'
 
                     // Start or restart the Node.js application using PM2
                     bat 'pm2 start app.js --name skycast'  // Assuming 'npm start' starts your app
