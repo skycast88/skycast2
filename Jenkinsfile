@@ -7,6 +7,7 @@ pipeline {
         SONARQUBE_URL = 'http://localhost:9000'   // Replace with your SonarQube server URL
         SONARQUBE_TOKEN = credentials('d814a8a3-bada-4f74-a879-1243b619f0b3') // Reference to the SonarQube token (ensure this is configured in Jenkins' credentials store)
         SONAR_SCANNER_HOME = 'C:\\sonar-scanner'
+        HOMEPATH = 'C:\\Users\\mohit.k.singh'
     }
     stages {
         stage('Checkout') {
