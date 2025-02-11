@@ -63,10 +63,10 @@ pipeline {
                 script {
                    echo 'Deploying Node.js application using PM2 on localhost...'
                     // Stop the current PM2 application if it exists
-                    bat 'pm2 stop app.js || echo "PM2 process not found, starting a new one."'
+                    bat 'pm2 stop skycast || echo "PM2 process not found, starting a new one."'
 
                     // Start or restart the Node.js application using PM2
-                    bat 'pm2 start npm --name "app.js" -- start'  // Assuming 'npm start' starts your app
+                    bat 'pm2 start app.js --name skycast'  // Assuming 'npm start' starts your app
 
                     // Optionally, save the PM2 process list to automatically restart on system reboot
                     bat 'pm2 save'
