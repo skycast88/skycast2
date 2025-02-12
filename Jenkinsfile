@@ -40,6 +40,17 @@ pipeline {
                
             }
         }
+
+        stage('Run Performance Test') {
+            steps {
+                script {
+                    echo 'Running performance test...'
+                    sh 'artillery run performance/performance-test.yml'  // Adjust path if needed
+                    sh 'artillery report --output performance/report.html'  // Save the report
+                }
+            }
+        }
+
         
         stage('Start Server') {
             steps {
@@ -64,6 +75,9 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
+        }
+        always {
+            archiveArtifacts artifacts: 'npm-audit-report.json, report.html', allowEmptyArchive: true
         }
     }
 }
