@@ -63,7 +63,7 @@ pipeline {
             steps {
                 script {
                     // Wait for the analysis to finish and check the quality gate
-                    def qualityGate = waitForQualityGate()
+                    def qualityGate = waitForQualityGate(timeout: 60)
                     if (qualityGate.status != 'OK') {
                         error "SonarQube Quality Gate failed: ${qualityGate.status}"
                     }
