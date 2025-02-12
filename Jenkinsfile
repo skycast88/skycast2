@@ -75,6 +75,7 @@ pipeline {
                         pm2 start app.js --name skycast
                         pm2 save
                     )
+                    '''
                 }
             }
         }
