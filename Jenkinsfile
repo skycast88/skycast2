@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running performance test...'
-                    bat 'artillery run performance/performance-test.yml --output report.json'  // Adjust path if needed
+                    bat 'artillery run performance/performance-test.yml --output ./artillery_reports/report.json'  // Adjust path if needed
                     //bat 'artillery report --output performance/report.html'  // Save the report
                 }
             }
@@ -100,6 +100,7 @@ pipeline {
         }
         always {
             archiveArtifacts artifacts: 'npm-audit-report.json, report.html', allowEmptyArchive: true
+            archiveArtifacts artifacts: './artillery_reports/report.json', allowEmptyArchive: true
         }
     }
 }
