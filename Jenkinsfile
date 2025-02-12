@@ -56,15 +56,25 @@ pipeline {
             steps {
                 // Run the server on localhost:3000
                 script {
-                   echo 'Deploying Node.js application using PM2 on localhost...'
-                    // Stop the current PM2 application if it exists
-                   // bat 'pm2 stop skycast || echo "PM2 process not found, starting a new one."'
+                   // echo 'Deploying Node.js application using PM2 on localhost...'
+                   //  // Stop the current PM2 application if it exists
+                   // // bat 'pm2 stop skycast || echo "PM2 process not found, starting a new one."'
 
-                    // Start or restart the Node.js application using PM2
-                    bat 'pm2 start app.js --name skycast'  // Assuming 'npm start' starts your app
+                   //  // Start or restart the Node.js application using PM2
+                   //  bat 'pm2 start app.js --name skycast'  // Assuming 'npm start' starts your app
 
-                    // Optionally, save the PM2 process list to automatically restart on system reboot
-                    bat 'pm2 save'
+                   //  // Optionally, save the PM2 process list to automatically restart on system reboot
+                   //  bat 'pm2 save'
+                    bat '''@echo off
+                    pm2 list | findstr /i "skycast" > nul
+                    if %errorlevel% equ 0 (
+                        echo "Application 'skycast' is running, restarting it..."
+                        pm2 restart skycast
+                    ) else (
+                        echo "Application 'skycast' is not running, starting it..."
+                        pm2 start app.js --name skycast
+                        pm2 save
+                    )
                 }
             }
         }
