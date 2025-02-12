@@ -77,10 +77,7 @@ pipeline {
                     echo 'Running performance test...'
                     bat 'artillery run performance/performance-test.yml --output performance/report.json'  // Adjust path if needed
                     //bat 'artillery report --output performance/report.html'  // Save the report
-                    def result = bat(script: 'npx artillery run performance/performance-test.yml', returnStatus: true)
-                    if (result != 0) {
-                        error "Performance test failed with exit code ${result}"
-                    }
+                    
                 }
             }
         }
