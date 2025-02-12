@@ -41,12 +41,23 @@ pipeline {
             }
         }
 
+        stage('Run Security Audit') {
+            steps {
+                script {
+                    echo 'Running npm audit...'
+                    bat 'npm audit --json > npm-audit-report.json'
+                    echo 'Generating npm audit report...'
+                    bat 'npm audit'
+                }
+            }
+        }
+
         stage('Run Performance Test') {
             steps {
                 script {
                     echo 'Running performance test...'
-                    sh 'artillery run performance/performance-test.yml'  // Adjust path if needed
-                    sh 'artillery report --output performance/report.html'  // Save the report
+                    bat 'artillery run performance/performance-test.yml'  // Adjust path if needed
+                    bat 'artillery report --output performance/report.html'  // Save the report
                 }
             }
         }
