@@ -56,8 +56,8 @@ pipeline {
             steps {
                 script {
                     echo 'Running performance test...'
-                    bat 'artillery run performance/performance-test.yml'  // Adjust path if needed
-                    bat 'artillery report --output performance/report.html'  // Save the report
+                    bat 'artillery run performance/performance-test.yml --output report.json'  // Adjust path if needed
+                    //bat 'artillery report --output performance/report.html'  // Save the report
                 }
             }
         }
