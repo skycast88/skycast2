@@ -41,13 +41,32 @@ pipeline {
             }
         }
 
-        stage('Run Security Audit') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    echo 'Running npm audit...'
-                    bat 'npm audit --json > npm-audit-report.json'
-                    echo 'Generating npm audit report...'
-                    bat 'npm audit'
+                    // Run SonarQube scanner for code analysis
+                    withSonarQubeEnv('LocalSonarQube') {  // 'Local SonarQube' is the name of your configured SonarQube instance in Jenkins
+                        bat """
+                            %SONAR_SCANNER_HOME%\\bin\\sonar-scanner.bat ^
+                            -Dsonar.projectKey=com.skycast ^
+                            -Dsonar.projectName="Skycast" ^
+                            -Dsonar.projectVersion=1.0 ^
+                            -Dsonar.sources=.
+                            -Dsonar.host.url=%SONARQUBE_URL% ^
+                            -Dsonar.login=%SONARQUBE_TOKEN%
+                        """
+                    }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    // Wait for the analysis to finish and check the quality gate
+                    def qualityGate = waitForQualityGate()
+                    if (qualityGate.status != 'OK') {
+                        error "SonarQube Quality Gate failed: ${qualityGate.status}"
+                    }
                 }
             }
         }
@@ -61,6 +80,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Run Security Audit') {
+            steps {
+                script {
+                    echo 'Running npm audit...'
+                    bat 'npm audit --json > npm-audit-report.json'
+                    echo 'Generating npm audit report...'
+                    bat 'npm audit'
+                }
+            }
+        }
+
+        
 
         
         stage('Start Server') {
