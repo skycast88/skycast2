@@ -1,7 +1,7 @@
 config:
   target: 'http://localhost:3000'  # The URL of your application
   phases:
-    - duration: 60  # Duration of the test in seconds
+    - duration: 30  # Duration of the test in seconds
       arrivalRate: 5  # Number of virtual users to simulate every second
   defaults:
     headers:
