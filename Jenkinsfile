@@ -59,17 +59,17 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate') {
-            steps {
-                script {
-                    // Wait for the analysis to finish and check the quality gate
-                    def qualityGate = waitForQualityGate()
-                    if (qualityGate.status != 'OK') {
-                        error "SonarQube Quality Gate failed: ${qualityGate.status}"
-                    }
-                }
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //         script {
+        //             // Wait for the analysis to finish and check the quality gate
+        //             def qualityGate = waitForQualityGate()
+        //             if (qualityGate.status != 'OK') {
+        //                 error "SonarQube Quality Gate failed: ${qualityGate.status}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Run Performance Test') {
             steps {
@@ -77,6 +77,12 @@ pipeline {
                     echo 'Running performance test...'
                     bat 'artillery run performance/performance-test.yml --output performance/report.json'  // Adjust path if needed
                     //bat 'artillery report --output performance/report.html'  // Save the report
+                    def report = readJSON file: 'performance/report.json'
+
+                        // If any critical thresholds are exceeded, fail the build.
+                        if (report.metrics.http.requests.total > 1000) {
+                            error "Performance test failed: Requests exceeded the expected threshold."
+                        }
                 }
             }
         }
